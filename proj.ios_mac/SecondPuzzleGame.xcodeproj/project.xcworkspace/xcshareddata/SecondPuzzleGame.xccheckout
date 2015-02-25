@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EAB5017C-7B69-48CA-922D-6D9079538BF9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SecondPuzzleGame</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5A3E627E67BCEE570B50824DA13724BD7B688F0A</key>
+		<string>https://github.com/SalmonAndKein/SecondPuzzleGame.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>proj.ios_mac/SecondPuzzleGame.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5A3E627E67BCEE570B50824DA13724BD7B688F0A</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/SalmonAndKein/SecondPuzzleGame.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5A3E627E67BCEE570B50824DA13724BD7B688F0A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5A3E627E67BCEE570B50824DA13724BD7B688F0A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SecondPuzzleGame</string>
+		</dict>
+	</array>
+</dict>
+</plist>

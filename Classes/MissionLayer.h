@@ -12,29 +12,55 @@
 #include "cocos2d.h"
 #include "GameSprite.h"
 #include "PlayerBall.h"
+#include "Candy.h"
 
 class MissionInfo {
 public:
-    int num;
-    MissionInfo(int _num = 2)
+    typedef struct spriteInfo
     {
-        num =  _num;
-        
+        int type;
+        float coord_x;
+        float coord_y;
+    } GameSpriteInfo;
+protected:
+    int targetListSize;
+    GameSpriteInfo * targetList;
+public:
+    MissionInfo(int _size)
+    {
+        if(_size < 0)
+        {
+            _size = 0;
+        }
+        targetListSize =  _size;
+        targetList = new GameSpriteInfo[targetListSize];
     }
     ~MissionInfo()
     {
-        
+        delete [] targetList;
+    }
+    GameSpriteInfo * GetGameSpriteInfo(int idx) {
+        if(idx<0 || idx>=targetListSize) {
+            return NULL;
+        }
+        return &targetList[idx];
+    }
+    int GetSize() {
+        return targetListSize;
     }
 };
 
 class MissionLayer : public cocos2d::Layer {
 protected:
+    bool missionLoaded;
     int gravity;
     int score;
     cocos2d::Size screenSize;
     cocos2d::Label *scoreLabel;
     std::vector<GameSprite*> candyArray;
     PlayerBall * ball;
+protected:
+    void ClearMission();
 public:
     MissionLayer();
     ~MissionLayer();

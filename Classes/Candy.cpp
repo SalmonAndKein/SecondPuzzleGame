@@ -11,4 +11,5 @@
 void Candy::SetBright()
 {
     this->setOpacity(255);
+    this->setbBright(true);
 }

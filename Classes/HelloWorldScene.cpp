@@ -53,6 +53,7 @@ bool HelloWorld::init()
     MissionInfo * testMission = new MissionInfo();
     this->addChild(mission);
     if(!mission->LoadMission(testMission))return false;
+    mission->setTouchEnabled(true);
     mission->scheduleUpdate();
     return true;
 }

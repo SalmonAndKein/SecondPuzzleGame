@@ -59,14 +59,19 @@ protected:
     cocos2d::Label *scoreLabel;
     std::vector<GameSprite*> candyArray;
     PlayerBall * ball;
-protected:
     void ClearMission();
+    cocos2d::Vec2 tap;
+
 public:
     MissionLayer();
     ~MissionLayer();
     //static MissionLayer * createMissionLayer();
     bool LoadMission(MissionInfo*);
     void update();
+    virtual bool onTouchBagan(cocos2d::Touch *pTouches);
+    virtual void onTouchMoved(cocos2d::Touch *pTouches);
+    virtual void onTouchEnded(cocos2d::Touch *pTouches);
+    
 };
 
 #endif /* defined(__SecondPuzzleGame__MissionLayer__) */

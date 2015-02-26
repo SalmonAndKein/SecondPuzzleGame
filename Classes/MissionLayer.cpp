@@ -47,3 +47,37 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
 void MissionLayer::update() {
     
 }
+
+bool MissionLayer::onTouchBagan(cocos2d::Touch *pTouches)
+{
+    if (pTouches)
+    {
+        float dx = ball->getPosition().x - pTouches->getLocation().x;
+        float dy = ball->getPosition().y - pTouches->getLocation().y;
+        
+        if (dx*dx + dy*dy <= pow(ball->Radius(), 2))
+        {
+            tap = pTouches->getLocation();
+            return true;
+        }
+    }
+    return false;
+}
+
+void MissionLayer::onTouchMoved(cocos2d::Touch *pTouches)
+{
+}
+void MissionLayer::onTouchEnded(cocos2d::Touch *pTouches)
+{
+    if (pTouches)
+    {
+        float dx = ball->getPosition().x - pTouches->getLocation().x;
+        float dy = ball->getPosition().y - pTouches->getLocation().y;
+        
+        if (dx*dx + dy*dy <= pow(ball->Radius(), 2))
+        {
+            cocos2d::Vec2 pivot = pTouches->getLocation();
+            ball->setMoveVector(cocos2d::ccpSub(pivot, tap));
+        }
+    }
+}

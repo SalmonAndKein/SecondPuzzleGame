@@ -49,11 +49,20 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
+    
+    
     MissionLayer * mission = new MissionLayer();
-    MissionInfo * testMission = new MissionInfo();
+    MissionInfo * testMission = new MissionInfo(3);
+    
+    for(int i=0; i<3; i++) {
+        auto targetData = testMission->GetGameSpriteInfo(0);
+        targetData->type = i;
+        targetData->coord_x = 100 + 100*i;
+        targetData->coord_y = 100 + 100*i;
+    }
+    
+    mission->LoadMission(testMission);
     this->addChild(mission);
-    if(!mission->LoadMission(testMission))return false;
-    mission->setTouchEnabled(true);
     mission->scheduleUpdate();
     return true;
 }

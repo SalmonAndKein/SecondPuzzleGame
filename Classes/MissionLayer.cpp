@@ -71,7 +71,7 @@ void MissionLayer::onTouchEnded(cocos2d::Touch *pTouches)
         if (dx*dx + dy*dy <= pow(ball->Radius(), 2))
         {
             cocos2d::Vec2 pivot = pTouches->getLocation();
-            ball->setMoveVector(cocos2d::ccpSub(pivot, tap));
+            ball->setMoveVector(pivot-tap);
         }
     }
 }

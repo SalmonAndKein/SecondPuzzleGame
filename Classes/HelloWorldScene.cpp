@@ -55,7 +55,7 @@ bool HelloWorld::init()
     MissionInfo * testMission = new MissionInfo(3);
     
     for(int i=0; i<3; i++) {
-        auto targetData = testMission->GetGameSpriteInfo(0);
+        auto targetData = testMission->GetGameSpriteInfo(i);
         targetData->type = i;
         targetData->coord_x = 100 + 100*i;
         targetData->coord_y = 100 + 100*i;

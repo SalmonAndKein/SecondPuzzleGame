@@ -19,6 +19,7 @@ public:
     GameSprite(){}
     ~GameSprite(){}
     void Move();
+    void testSomething() {}
     float Radius()
     {
         return getTexture()->getContentSize().width * 0.5f;

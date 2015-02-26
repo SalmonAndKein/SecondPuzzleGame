@@ -7,3 +7,8 @@
 //
 
 #include "Candy.h"
+
+void Candy::SetBright()
+{
+    this->setOpacity(255);
+}

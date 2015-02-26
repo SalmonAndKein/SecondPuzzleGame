@@ -14,7 +14,10 @@
 class Candy : public GameSprite
 {
 protected:
-    CC_SYNTHESIZE(bool, _bbright, Bright);
+    CC_SYNTHESIZE(bool, _bbright, bBright);
+    
+public:
+    void SetBright();
     
 };
 

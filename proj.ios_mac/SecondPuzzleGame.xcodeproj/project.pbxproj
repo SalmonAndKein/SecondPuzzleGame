@@ -366,10 +366,10 @@
 			isa = PBXGroup;
 			children = (
 				767181721A9D8AB40061FBC1 /* GameSprite.h */,
-				767181761A9D8F7C0061FBC1 /* PlayerBall.h */,
-				7671817A1A9D8FD10061FBC1 /* Candy.h */,
 				767181711A9D8AB40061FBC1 /* GameSprite.cpp */,
+				767181761A9D8F7C0061FBC1 /* PlayerBall.h */,
 				767181751A9D8F7C0061FBC1 /* PlayerBall.cpp */,
+				7671817A1A9D8FD10061FBC1 /* Candy.h */,
 				767181791A9D8FD10061FBC1 /* Candy.cpp */,
 			);
 			name = "New Group";

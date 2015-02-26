@@ -14,11 +14,15 @@
 class Candy : public GameSprite
 {
 protected:
+    int type;
     CC_SYNTHESIZE(bool, _bbright, bBright);
     
 public:
+    Candy();
+    Candy(int);
+    ~Candy();
     void SetBright();
-    
+    static Candy * createWithTypeNumber(int);
 };
 
 #endif /* defined(__SecondPuzzleGame__Candy__) */

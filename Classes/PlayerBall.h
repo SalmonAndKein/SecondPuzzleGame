@@ -26,7 +26,6 @@ public:
             ball->autorelease();
             return ball;
         }
-        void testGithubSycn() {}
         CC_SAFE_DELETE(ball);
         return NULL;
     }

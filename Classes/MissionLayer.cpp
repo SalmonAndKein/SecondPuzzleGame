@@ -14,7 +14,6 @@ MissionLayer::MissionLayer() {
     missionLoaded = false;
 }
 MissionLayer::~MissionLayer() {
-    
 }
 void MissionLayer::ClearMission() {
     movingObjectArray.empty();
@@ -56,7 +55,9 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
         this->addChild(curCandy);
         curCandy->retain();
     }
-
+    
+    gravity = -0.98;
+    airResistance = 0.98;
     missionLoaded = true;
     return true;
 }
@@ -73,17 +74,17 @@ void MissionLayer::update(float dt) {
         vec.x = -vec.x;
     }
     
-    //볼에 공기저항 작용
-    ball->setMoveVector(vec * 0.98);
+    //볼에 airResistance 작용
+    ball->setMoveVector(vec * airResistance);
 
     for(int i=0; i<movingObjectArray.size(); i++)
     {
         //움직임이 적용되는 대상에게만 공식 대입
         if(movingObjectArray[i]->getIsMoving())
         {
-            //중력 0.1 적용
+            //중력값 gravity 적용
             cocos2d::Vec2 curMoveVec = movingObjectArray[i]->getMoveVector();
-            curMoveVec.y -= 0.98;
+            curMoveVec.y += gravity;
             
             //만약 벡터의 절대값이 0.001보다 작을경우 값을 0으로 변경
             if(std::abs(curMoveVec.x) < 0.001)
@@ -108,13 +109,10 @@ void MissionLayer::update(float dt) {
     for(int i=0; i<candyArray.size(); i++) {
         float diff_x = std::abs(candyArray[i]->getPosition().x - ball->getPosition().x);
         float diff_y = std::abs(candyArray[i]->getPosition().y - ball->getPosition().y);
-        float sumOfRadi = candyArray[i]->Radius() + ball->Radius();
         if (pow(diff_x, 2) + pow(diff_y, 2) <= pow(ball->Radius() + candyArray[i]->Radius(), 2))
         {
             candyArray[i]->setIsMoving(true);
         }
-        
-       
     }
 }
 
@@ -130,7 +128,7 @@ bool MissionLayer::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
         {
             tap = pTouches->getLocation();
             linecontainer->setTap(ball->getPosition());
-            linecontainer->setPivot(tap);
+            linecontainer->setPivot(ball->getPosition());
             linecontainer->setLineType(LINE_DRAW);
             return true;
         }
@@ -142,11 +140,9 @@ void MissionLayer::onTouchMoved(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
     //그릴 라인의 끝부분을 터치가 이루어지는 곳으로 설정(draw메서드는 자동으로 호출된다.)
     linecontainer->setPivot(pTouches->getLocation());
-
 }
 void MissionLayer::onTouchEnded(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
-    
     if (pTouches)
     {
         //터치를 끌은 만큼 이동 벡터를 만들고 볼의 이동벡터에 적용시킨다. 이후 볼은 update매서드에 의해 자동으로 이동함, 그리고 라인 콘테이너를 비활성으로 만듬

@@ -2,13 +2,13 @@
 //  LineContainer.cpp
 //  SecondPuzzleGame
 //
-//  Created by Myloi Mellanc on 2015. 2. 27..
+//  Created by Salmon on 2015. 2. 27..
 //
 //
 
 #include "LineContainer.h"
-USING_NS_CC;
 
+USING_NS_CC;
 
 void LineContainer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
@@ -23,17 +23,11 @@ void LineContainer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
             renderer->addCommand(&cmd);
             break;
     }
-    
 }
-
-
 void LineContainer::onDraw(const Mat4 &transform, uint32_t flags)
 {
-    
-    
     DrawPrimitives::setDrawColor4B(255, 0, 0, 255);
     glLineWidth(4.0f);
     DrawPrimitives::drawLine(tap,pivot);
     CHECK_GL_ERROR_DEBUG();
-    
 }

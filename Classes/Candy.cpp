@@ -16,13 +16,11 @@ Candy::Candy(int _type) {
 Candy::~Candy() {
     
 }
-
 void Candy::SetBright()
 {
     this->setOpacity(255);
     this->setbBright(true);
 }
-
 Candy * Candy::createWithTypeNumber(int type) {
     auto * candy = new Candy(type);
     if(candy && candy->initWithFile("Ball-3.png"))

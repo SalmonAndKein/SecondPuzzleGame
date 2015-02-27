@@ -58,13 +58,48 @@ bool HelloWorld::init()
         auto targetData = testMission->GetGameSpriteInfo(i);
         targetData->type = i;
         targetData->coord_x = 100 + 100*i;
-        targetData->coord_y = 100 + 100*i;
+        targetData->coord_y = visibleSize.height * 0.8;
     }
-    
     mission->LoadMission(testMission);
     this->addChild(mission);
-    mission->scheduleUpdate();
+    
+    //update 활성화
+    this->scheduleUpdate();
+    
+    //터치 활성화
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setEnabled(true);
+    listener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    //터치 이벤트를 처리할 타깃 레이어 선택
+    targetLayer = mission;
     return true;
+}
+
+void HelloWorld::update(float dt) {
+    targetLayer->update(dt);
+}
+
+bool HelloWorld::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
+{
+    return targetLayer->onTouchBegan(pTouches, event);
+}
+
+void HelloWorld::onTouchMoved(cocos2d::Touch *pTouches,cocos2d::Event *event)
+{
+    targetLayer->onTouchMoved(pTouches, event);
+}
+void HelloWorld::onTouchEnded(cocos2d::Touch *pTouches,cocos2d::Event *event)
+{
+    targetLayer->onTouchEnded(pTouches, event);
+}
+void HelloWorld::onTouchCancelled(cocos2d::Touch *pTouches,cocos2d::Event *event)
+{
+    targetLayer->onTouchCancelled(pTouches, event);
 }
 
 

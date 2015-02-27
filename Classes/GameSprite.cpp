@@ -11,6 +11,6 @@
 
 void GameSprite::Move()
 {
-    cocos2d::Vec2 position = getPosition() + getMoveVector();
-    this->setPosition(position);
+    cocos2d::Vec2 nextPosition = getPosition() + getMoveVector();
+    this->setPosition(nextPosition);
 }

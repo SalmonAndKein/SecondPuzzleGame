@@ -53,11 +53,11 @@ public:
 class MissionLayer : public cocos2d::Layer {
 protected:
     bool missionLoaded;
-    int gravity;
     int score;
     cocos2d::Size screenSize;
     cocos2d::Label *scoreLabel;
-    std::vector<GameSprite*> candyArray;
+    std::vector<GameSprite*> movingObjectArray;
+    std::vector<Candy*> candyArray;
     PlayerBall * ball;
     void ClearMission();
     cocos2d::Vec2 tap;
@@ -67,10 +67,11 @@ public:
     ~MissionLayer();
     //static MissionLayer * createMissionLayer();
     bool LoadMission(MissionInfo*);
-    void update();
-    virtual bool onTouchBagan(cocos2d::Touch *pTouches);
-    virtual void onTouchMoved(cocos2d::Touch *pTouches);
-    virtual void onTouchEnded(cocos2d::Touch *pTouches);
+    virtual void update(float);
+    virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
+    virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
+    virtual void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
+    virtual void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
     
 };
 

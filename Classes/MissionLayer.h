@@ -13,6 +13,7 @@
 #include "GameSprite.h"
 #include "PlayerBall.h"
 #include "Candy.h"
+#include "LineContainer.h"
 
 class MissionInfo {
 public:
@@ -61,7 +62,10 @@ protected:
     PlayerBall * ball;
     void ClearMission();
     cocos2d::Vec2 tap;
+    LineContainer *linecontainer;
 
+    
+   
 public:
     MissionLayer();
     ~MissionLayer();

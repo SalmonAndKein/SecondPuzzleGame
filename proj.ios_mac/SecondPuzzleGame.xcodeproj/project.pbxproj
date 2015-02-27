@@ -76,6 +76,8 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		DB5EDF1F1AA1243C0091CB8E /* LineContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDF1D1AA1243B0091CB8E /* LineContainer.cpp */; };
+		DB5EDF201AA1243C0091CB8E /* LineContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB5EDF1D1AA1243B0091CB8E /* LineContainer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +177,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		DB5EDF1D1AA1243B0091CB8E /* LineContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineContainer.cpp; sourceTree = "<group>"; };
+		DB5EDF1E1AA1243B0091CB8E /* LineContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineContainer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +313,8 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				7671816E1A9D8A4B0061FBC1 /* MissionLayer.h */,
 				7671816D1A9D8A4B0061FBC1 /* MissionLayer.cpp */,
+				DB5EDF1D1AA1243B0091CB8E /* LineContainer.cpp */,
+				DB5EDF1E1AA1243B0091CB8E /* LineContainer.h */,
 				767181801A9D9DB30061FBC1 /* New Group */,
 			);
 			name = Classes;
@@ -524,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				DB5EDF1F1AA1243C0091CB8E /* LineContainer.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				7671816F1A9D8A4B0061FBC1 /* MissionLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -544,6 +551,7 @@
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				767181781A9D8F7C0061FBC1 /* PlayerBall.cpp in Sources */,
+				DB5EDF201AA1243C0091CB8E /* LineContainer.cpp in Sources */,
 				767181741A9D8AB40061FBC1 /* GameSprite.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);

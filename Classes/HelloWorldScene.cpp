@@ -103,7 +103,6 @@ void HelloWorld::onTouchCancelled(cocos2d::Touch *pTouches,cocos2d::Event *event
     targetLayer->onTouchCancelled(pTouches, event);
 }
 
-
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

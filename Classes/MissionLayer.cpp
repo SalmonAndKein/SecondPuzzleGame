@@ -40,7 +40,6 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
     linecontainer = LineContainer::create();
     this->addChild(linecontainer);
     
-    
     //캔디
     for(int i=0; i<info->GetSize(); i++) {
         auto candyData = info->GetGameSpriteInfo(i);
@@ -57,7 +56,7 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
         curCandy->retain();
     }
     
-    gravity = -0.98;
+    gravityVector = cocos2d::Vec2(0,-0.98);
     airResistance = 0.98;
     numOfBall = info->GetNumOfBall();
     bGameOver = false;
@@ -73,15 +72,14 @@ void MissionLayer::update(float dt) {
     cocos2d::Vec2 vec = ball->getMoveVector();
     if (ball->getPosition().y>=screenSize.height || ball->getPosition().y<=0)
     {
-        vec.y = -vec.y;
+        vec.y -= vec.y;
     }
     if (ball->getPosition().x>=screenSize.width || ball->getPosition().x<=0)
     {
-        vec.x = -vec.x;
+        vec.x -= vec.x;
     }
-    
     //볼에 airResistance 작용
-    ball->setMoveVector(vec * airResistance);
+    ball->setMoveVector(vec);
 
     for(int i=0; i<movingObjectArray.size(); i++)
     {
@@ -90,41 +88,32 @@ void MissionLayer::update(float dt) {
         {
             //중력값 gravity 적용
             cocos2d::Vec2 curMoveVec = movingObjectArray[i]->getMoveVector();
-            curMoveVec.y += gravity;
-            
+            curMoveVec += gravityVector;
             //만약 벡터의 절대값이 0.001보다 작을경우 값을 0으로 변경
             if(std::abs(curMoveVec.x) < 0.001)
                 curMoveVec.x = 0;
             if(std::abs(curMoveVec.y) < 0.001)
                 curMoveVec.y = 0;
-            
             //수정된 값에 따라 벡터값 재적용 후 이동
             movingObjectArray[i]->setMoveVector(curMoveVec);
             movingObjectArray[i]->Move();
-        }
-        if(movingObjectArray[i]->getPosition().y <= 0) {
-            movingObjectArray[i]->setIsMoving(false);
-            if (movingObjectArray[i] == ball)
-            {
-                numOfBall--;
-                if (numOfBall>0)
+            
+            if(movingObjectArray[i]->getPosition().y <= 0) {
+                movingObjectArray[i]->setIsMoving(false);
+                if (movingObjectArray[i] == ball)
                 {
-                    movingObjectArray[i]->setPosition(ballStartPoint);
-                }
-                else
-                {
-                    bGameOver = true;
+                    numOfBall--;
+                    if (numOfBall>0)
+                        movingObjectArray[i]->setPosition(ballStartPoint);
+                    else
+                        bGameOver = true;
                 }
             }
-            
         }
     }
-    //캔디가 맞았을 경우 중력 작용
+    //캔디가 맞았을 경우 이동 활성화
     for(int i=0; i<candyArray.size(); i++) {
-        float diff_x = std::abs(candyArray[i]->getPosition().x - ball->getPosition().x);
-        float diff_y = std::abs(candyArray[i]->getPosition().y - ball->getPosition().y);
-        if (pow(diff_x, 2) + pow(diff_y, 2) <= pow(ball->Radius() + candyArray[i]->Radius(), 2))
-        {
+        if(ball->CheckCollision(candyArray[i])) {
             candyArray[i]->setIsMoving(true);
         }
     }

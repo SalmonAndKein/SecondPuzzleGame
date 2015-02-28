@@ -21,9 +21,9 @@ protected:
     bool bGameOver;
     bool missionLoaded;
     int score;
-    float gravity;
     float airResistance;
     int numOfBall;
+    cocos2d::Vec2 gravityVector;
     cocos2d::Vec2 ballStartPoint;
     cocos2d::Size screenSize;
     cocos2d::Label *scoreLabel;

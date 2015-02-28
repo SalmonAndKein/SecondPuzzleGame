@@ -8,26 +8,34 @@
 
 #include "MissionInfo.h"
 
-MissionInfo::MissionInfo(int _size)
+MissionInfo::MissionInfo()
 {
-    numOfBall = 5;
-    if(_size < 0)
-    {
-        _size = 0;
-    }
-    targetListSize =  _size;
-    targetList = new GameSpriteInfo[targetListSize];
+    _numOfBall = 5;
+    _airResistance = 0.99;
+    _gravity = -0.98;
 }
 MissionInfo::~MissionInfo()
 {
-    delete [] targetList;
+    while (!GameSpriteInitDataArray.empty()) {
+        GameSpriteData * element = GameSpriteInitDataArray.back();
+        delete element;
+        GameSpriteInitDataArray.pop_back();
+    }
 }
-MissionInfo::GameSpriteInfo * MissionInfo::GetGameSpriteInfo(int idx) {
-    if(idx<0 || idx>=targetListSize) {
+int MissionInfo::InsertGameSpriteInitData(GameSpriteData * _gameSprite) {
+    if(_gameSprite) {
+        GameSpriteData * gameSprite = new GameSpriteData(*_gameSprite);
+        GameSpriteInitDataArray.push_back(gameSprite);
+        return GetGameSpriteArraySize();
+    }
+    return 0;
+}
+MissionInfo::GameSpriteData * MissionInfo::GetGameSpriteInitData(int idx) {
+    if(idx<0 || idx>=GameSpriteInitDataArray.size()) {
         return NULL;
     }
-    return &targetList[idx];
+    return GameSpriteInitDataArray[idx];
 }
-int MissionInfo::GetSize() {
-    return targetListSize;
+int MissionInfo::GetGameSpriteArraySize() {
+    return (int) GameSpriteInitDataArray.size();
 }

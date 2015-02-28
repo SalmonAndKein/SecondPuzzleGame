@@ -11,75 +11,99 @@
 USING_NS_CC;
 
 MissionLayer::MissionLayer() {
-    missionLoaded = false;
+    bMissionLoaded = false;
 }
 MissionLayer::~MissionLayer() {
 }
-void MissionLayer::ClearMission() {
-    movingObjectArray.empty();
-    candyArray.empty();
-    this->removeAllChildren();
-    missionLoaded = false;
+void MissionLayer::UnloadMission() {
+    if(bMissionRunning)
+        StopMission();
+    movingObjectArray.clear();
+    candyArray.clear();
+    removeAllChildren();
+    bMissionLoaded = false;
 }
-bool MissionLayer::LoadMission(MissionInfo * info) {
-    //스크린 사이즈
-    screenSize = cocos2d::Director::getInstance()->getWinSize();
-    if(missionLoaded || info->GetSize() < 0)
+bool MissionLayer::LoadMission(MissionInfo * loadMissionInfo) {
+    if(bMissionLoaded || loadMissionInfo->GetGameSpriteArraySize() <= 0)
         return false;
     
-    //볼 생성
-    ballStartPoint = cocos2d::Vec2(screenSize.width*0.5,screenSize.height*0.1);
-    ball = PlayerBall::createWithType(0);
-    ball->setIsMoving(false);
-    ball->setPosition(ballStartPoint);
-    ball->setMoveVector(cocos2d::Vec2(0,0));
-    movingObjectArray.push_back(ball);
-    this->addChild(ball);
+    screenSize = Director::getInstance()->getWinSize();
     
     //라인 그리기용 클래스 생성
     linecontainer = LineContainer::create();
     this->addChild(linecontainer);
+    linecontainer->retain();
     
-    //캔디
-    for(int i=0; i<info->GetSize(); i++) {
-        auto candyData = info->GetGameSpriteInfo(i);
-        float candy_position_x = candyData->coord_x;
-        float candy_position_y = candyData->coord_y;
-        int candyType = candyData->type;
-        auto curCandy = Candy::createWithTypeNumber(candyType);
-        curCandy->setPosition(cocos2d::Vec2(candy_position_x, candy_position_y));
-        curCandy->setIsMoving(false);
-        curCandy->setMoveVector(cocos2d::Vec2(0,0));
-        candyArray.push_back(curCandy);
-        movingObjectArray.push_back(curCandy);
-        this->addChild(curCandy);
-        curCandy->retain();
+    //볼 생성
+    ball = PlayerBall::createWithType(0);
+    movingObjectArray.push_back(ball);
+    this->addChild(ball);
+    this->retain();
+    //볼 초기화
+    ballStartPoint = cocos2d::Vec2(screenSize.width * 0.5,screenSize.height * 0.1);
+    ball->setIsMoving(false);
+    ball->setPosition(ballStartPoint);
+    ball->setMoveVector(cocos2d::Vec2(0,0));
+    
+    for(int i=0; i<loadMissionInfo->GetGameSpriteArraySize(); i++) {
+        //캔디 생성
+        auto candyInitData = loadMissionInfo->GetGameSpriteInitData(i);
+        auto newCandy = Candy::createWithTypeNumber(candyInitData->getType());
+        movingObjectArray.push_back(newCandy);
+        candyArray.push_back(newCandy);
+        this->addChild(newCandy);
+        newCandy->retain();
+        //캔디 초기화
+        newCandy->setPosition(cocos2d::Vec2(candyInitData->getPositionX(), candyInitData->getPositionY()));
+        newCandy->setIsMoving(false);
+        newCandy->setMoveVector(cocos2d::Vec2(0,0));
     }
     
-    gravityVector = cocos2d::Vec2(0,-0.98);
-    airResistance = 0.98;
-    numOfBall = info->GetNumOfBall();
+    //게임 정보 초기화
+    gravityFactor = loadMissionInfo->getGravityFactor();
+    airResistanceFactor = loadMissionInfo->getAirResistanceFacotor();
+    curNumOfBall = loadMissionInfo->getNumberOfBall();
     bGameOver = false;
-    missionLoaded = true;
+    bMissionLoaded = true;
+    bMissionRunning = false;
+    
     return true;
 }
-void MissionLayer::update(float dt) {
-    if (bGameOver) {
-        cocos2d::log("GameOver");
-        return;
+void MissionLayer::StartMission() {
+    this->scheduleUpdate();
+    bMissionRunning = true;
+}
+void MissionLayer::StopMission() {
+    this->unscheduleUpdate();
+    bMissionRunning = false;
+}
+void MissionLayer::PauseMission(bool bOption) {
+    if(bOption == true) {
+        this->unscheduleUpdate();
+        bMissionRunning = false;
+    } else {
+        this->scheduleUpdate();
+        bMissionRunning = true;
     }
+}
+void MissionLayer::SetGameOver() {
+    bGameOver = true;
+    StopMission();
+    cocos2d::log("GameOver");
+}
+void MissionLayer::update(float dt) {
     //벽 충돌 판단
     cocos2d::Vec2 vec = ball->getMoveVector();
     if (ball->getPosition().y>=screenSize.height || ball->getPosition().y<=0)
     {
-        vec.y -= vec.y;
+        vec.y = -vec.y;
     }
     if (ball->getPosition().x>=screenSize.width || ball->getPosition().x<=0)
     {
-        vec.x -= vec.x;
+        vec.x = -vec.x;
     }
     //볼에 airResistance 작용
-    ball->setMoveVector(vec);
+    ball->setMoveVector(vec * airResistanceFactor);
 
     for(int i=0; i<movingObjectArray.size(); i++)
     {
@@ -88,7 +112,7 @@ void MissionLayer::update(float dt) {
         {
             //중력값 gravity 적용
             cocos2d::Vec2 curMoveVec = movingObjectArray[i]->getMoveVector();
-            curMoveVec += gravityVector;
+            curMoveVec.y = curMoveVec.y + gravityFactor;
             //만약 벡터의 절대값이 0.001보다 작을경우 값을 0으로 변경
             if(std::abs(curMoveVec.x) < 0.001)
                 curMoveVec.x = 0;
@@ -102,11 +126,11 @@ void MissionLayer::update(float dt) {
                 movingObjectArray[i]->setIsMoving(false);
                 if (movingObjectArray[i] == ball)
                 {
-                    numOfBall--;
-                    if (numOfBall>0)
+                    curNumOfBall--;
+                    if (curNumOfBall>0)
                         movingObjectArray[i]->setPosition(ballStartPoint);
                     else
-                        bGameOver = true;
+                        SetGameOver();
                 }
             }
         }
@@ -118,7 +142,6 @@ void MissionLayer::update(float dt) {
         }
     }
 }
-
 bool MissionLayer::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
     //터치가 볼에 닿았을 경우 라인 콘테이너의 시작점과 끝점을 선정, 그 후 라인 타입(라인을 그려도 된다고 지시)을 바꾼다.
@@ -138,7 +161,6 @@ bool MissionLayer::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
     }
     return false;
 }
-
 void MissionLayer::onTouchMoved(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
     //그릴 라인의 끝부분을 터치가 이루어지는 곳으로 설정(draw메서드는 자동으로 호출된다.)

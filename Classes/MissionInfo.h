@@ -13,29 +13,29 @@
 
 class MissionInfo {
 public:
-    typedef struct spriteInfo
+    class GameSpriteData
     {
-        int type;
-        float coord_x;
-        float coord_y;
-    } GameSpriteInfo;
+    public:
+        CC_SYNTHESIZE(int,_type,Type)
+        CC_SYNTHESIZE(float,_coord_x,PositionX)
+        CC_SYNTHESIZE(float,_coord_y,PositionY)
+        GameSpriteData() : GameSpriteData(0,0.f,0.f) {}
+        GameSpriteData(int type, float x, float y) {
+            setType(type);
+            setPositionX(x);
+            setPositionY(y);
+        }
+    };
 protected:
-    int numOfBall;
-    int numOfCandyType;
-    int targetListSize;
-    GameSpriteInfo * targetList;
+    CC_SYNTHESIZE_READONLY(float,_gravity,GravityFactor)
+    CC_SYNTHESIZE_READONLY(float,_airResistance,AirResistanceFacotor)
+    CC_SYNTHESIZE_READONLY(int, _numOfBall, NumberOfBall)
+    std::vector<GameSpriteData*> GameSpriteInitDataArray;
 public:
-    MissionInfo(int);
+    MissionInfo();
     ~MissionInfo();
-    GameSpriteInfo * GetGameSpriteInfo(int idx);
-    int GetSize();
-    int GetNumOfBall()
-    {
-        return numOfBall;
-    }
-    int GettargetListSize()
-    {
-        return targetListSize;
-    }
+    int InsertGameSpriteInitData(GameSpriteData*);
+    GameSpriteData * GetGameSpriteInitData(int idx);
+    int GetGameSpriteArraySize();
 };
 #endif /* defined(__SecondPuzzleGame__MissionInfo__) */

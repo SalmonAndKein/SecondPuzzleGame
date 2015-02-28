@@ -49,58 +49,35 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
-    
-    
-    
     MissionLayer * mission = new MissionLayer();
-    MissionInfo * testMission = new MissionInfo(5);
     
-    for(int i=0; i<testMission->GettargetListSize(); i++) {
-        auto targetData = testMission->GetGameSpriteInfo(i);
-        targetData->type = i;
-        targetData->coord_x = 100 + 100*i;
-        targetData->coord_y = visibleSize.height * 0.8;
+    //MissionInfo 생성 및 초기화
+    MissionInfo * missionInitData = new MissionInfo();
+    auto gameSpriteData = new MissionInfo::GameSpriteData();
+    for(int i=0; i<3; i++) {
+        gameSpriteData->setType(i);
+        gameSpriteData->setPositionX(100.f + 100.f * i);
+        gameSpriteData->setPositionY(visibleSize.height * 0.8f);
+        missionInitData->InsertGameSpriteInitData(gameSpriteData);
     }
-    mission->LoadMission(testMission);
-    this->addChild(mission);
+    delete gameSpriteData;
     
-    //update 활성화
-    this->scheduleUpdate();
+    mission->LoadMission(missionInitData);
+    mission->StartMission();
+    //mission->PauseMission(true);
     
-    //터치 활성화
+    //mission의 터치 활성화
     auto listener = EventListenerTouchOneByOne::create();
     listener->setEnabled(true);
-    listener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
-    listener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    listener->onTouchBegan = CC_CALLBACK_2(MissionLayer::onTouchBegan, mission);
+    listener->onTouchMoved = CC_CALLBACK_2(MissionLayer::onTouchMoved, mission);
+    listener->onTouchEnded = CC_CALLBACK_2(MissionLayer::onTouchEnded, mission);
+    listener->onTouchCancelled = CC_CALLBACK_2(MissionLayer::onTouchCancelled, mission);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, mission);
     
-    //터치 이벤트를 처리할 타깃 레이어 선택
-    targetLayer = mission;
+    this->addChild(mission);
+    
     return true;
-}
-
-void HelloWorld::update(float dt) {
-    targetLayer->update(dt);
-}
-
-bool HelloWorld::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
-{
-    return targetLayer->onTouchBegan(pTouches, event);
-}
-
-void HelloWorld::onTouchMoved(cocos2d::Touch *pTouches,cocos2d::Event *event)
-{
-    targetLayer->onTouchMoved(pTouches, event);
-}
-void HelloWorld::onTouchEnded(cocos2d::Touch *pTouches,cocos2d::Event *event)
-{
-    targetLayer->onTouchEnded(pTouches, event);
-}
-void HelloWorld::onTouchCancelled(cocos2d::Touch *pTouches,cocos2d::Event *event)
-{
-    targetLayer->onTouchCancelled(pTouches, event);
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)

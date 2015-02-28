@@ -313,8 +313,8 @@
 			children = (
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				7671816E1A9D8A4B0061FBC1 /* MissionLayer.h */,
 				768544B81AA04EF400E70186 /* MissionLayer.cpp */,
 				767181801A9D9DB30061FBC1 /* New Group */,

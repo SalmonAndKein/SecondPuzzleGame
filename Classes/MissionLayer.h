@@ -18,27 +18,36 @@
 
 class MissionLayer : public cocos2d::Layer {
 protected:
+    typedef std::vector<GameSprite*> GameSpriteArray;
+    typedef std::vector<Candy*> CandyArray;
+    typedef std::vector<CandyArray*> CandyArrayArray;
     bool bGameOver;
-    bool missionLoaded;
+    bool bMissionLoaded;
+    bool bMissionRunning;
     int score;
-    float airResistance;
-    int numOfBall;
-    cocos2d::Vec2 gravityVector;
+    float gravityFactor;
+    float airResistanceFactor;
+    int curNumOfBall;
     cocos2d::Vec2 ballStartPoint;
     cocos2d::Size screenSize;
     cocos2d::Label *scoreLabel;
-    std::vector<GameSprite*> movingObjectArray;
-    std::vector<Candy*> candyArray;
+    GameSpriteArray movingObjectArray;
+    CandyArrayArray candyTypeArray;
+    CandyArray candyArray;
     PlayerBall * ball;
     cocos2d::Vec2 tap;
     LineContainer *linecontainer;
-    void ClearMission();
-   
+    void SetGameOver();
 public:
     MissionLayer();
     ~MissionLayer();
     //static MissionLayer * createMissionLayer();
     bool LoadMission(MissionInfo*);
+    void UnloadMission();
+    void StartMission();
+    void StopMission();
+    void PauseMission(bool);
+    
     virtual void update(float);
     virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
     virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);

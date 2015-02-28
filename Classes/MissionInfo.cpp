@@ -10,6 +10,7 @@
 
 MissionInfo::MissionInfo(int _size)
 {
+    numOfBall = 5;
     if(_size < 0)
     {
         _size = 0;

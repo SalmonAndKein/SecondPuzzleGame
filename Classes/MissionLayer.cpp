@@ -28,9 +28,10 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
         return false;
     
     //볼 생성
+    ballStartPoint = cocos2d::Vec2(screenSize.width*0.5,screenSize.height*0.1);
     ball = PlayerBall::createWithType(0);
     ball->setIsMoving(false);
-    ball->setPosition(100,200);
+    ball->setPosition(ballStartPoint);
     ball->setMoveVector(cocos2d::Vec2(0,0));
     movingObjectArray.push_back(ball);
     this->addChild(ball);
@@ -58,11 +59,16 @@ bool MissionLayer::LoadMission(MissionInfo * info) {
     
     gravity = -0.98;
     airResistance = 0.98;
+    numOfBall = info->GetNumOfBall();
+    bGameOver = false;
     missionLoaded = true;
     return true;
 }
 void MissionLayer::update(float dt) {
-    
+    if (bGameOver) {
+        cocos2d::log("GameOver");
+        return;
+    }
     //벽 충돌 판단
     cocos2d::Vec2 vec = ball->getMoveVector();
     if (ball->getPosition().y>=screenSize.height || ball->getPosition().y<=0)
@@ -100,7 +106,15 @@ void MissionLayer::update(float dt) {
             movingObjectArray[i]->setIsMoving(false);
             if (movingObjectArray[i] == ball)
             {
-                movingObjectArray[i]->setPosition(cocos2d::Vec2(screenSize.width*0.5,screenSize.height*0.1));
+                numOfBall--;
+                if (numOfBall>0)
+                {
+                    movingObjectArray[i]->setPosition(ballStartPoint);
+                }
+                else
+                {
+                    bGameOver = true;
+                }
             }
             
         }

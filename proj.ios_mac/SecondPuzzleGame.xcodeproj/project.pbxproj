@@ -379,8 +379,8 @@
 				768544C01AA0508000E70186 /* PlayerBall.cpp */,
 				7671817A1A9D8FD10061FBC1 /* Candy.h */,
 				768544BD1AA0508000E70186 /* Candy.cpp */,
-				768544BF1AA0508000E70186 /* MissionInfo.cpp */,
 				768544B51AA04CE700E70186 /* MissionInfo.h */,
+				768544BF1AA0508000E70186 /* MissionInfo.cpp */,
 				DB5EDF1E1AA1243B0091CB8E /* LineContainer.h */,
 				768544C91AA050FA00E70186 /* LineContainer.cpp */,
 			);

@@ -18,18 +18,22 @@
 
 class MissionLayer : public cocos2d::Layer {
 protected:
+    bool bGameOver;
     bool missionLoaded;
     int score;
     float gravity;
     float airResistance;
+    int numOfBall;
+    cocos2d::Vec2 ballStartPoint;
     cocos2d::Size screenSize;
     cocos2d::Label *scoreLabel;
     std::vector<GameSprite*> movingObjectArray;
     std::vector<Candy*> candyArray;
     PlayerBall * ball;
-    void ClearMission();
     cocos2d::Vec2 tap;
     LineContainer *linecontainer;
+    void ClearMission();
+   
 public:
     MissionLayer();
     ~MissionLayer();

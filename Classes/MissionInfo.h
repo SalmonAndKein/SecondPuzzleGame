@@ -20,6 +20,8 @@ public:
         float coord_y;
     } GameSpriteInfo;
 protected:
+    int numOfBall;
+    int numOfCandyType;
     int targetListSize;
     GameSpriteInfo * targetList;
 public:
@@ -27,5 +29,13 @@ public:
     ~MissionInfo();
     GameSpriteInfo * GetGameSpriteInfo(int idx);
     int GetSize();
+    int GetNumOfBall()
+    {
+        return numOfBall;
+    }
+    int GettargetListSize()
+    {
+        return targetListSize;
+    }
 };
 #endif /* defined(__SecondPuzzleGame__MissionInfo__) */

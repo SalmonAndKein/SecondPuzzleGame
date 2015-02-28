@@ -51,10 +51,11 @@ bool HelloWorld::init()
     
     
     
-    MissionLayer * mission = new MissionLayer();
-    MissionInfo * testMission = new MissionInfo(3);
     
-    for(int i=0; i<3; i++) {
+    MissionLayer * mission = new MissionLayer();
+    MissionInfo * testMission = new MissionInfo(5);
+    
+    for(int i=0; i<testMission->GettargetListSize(); i++) {
         auto targetData = testMission->GetGameSpriteInfo(i);
         targetData->type = i;
         targetData->coord_x = 100 + 100*i;

@@ -38,6 +38,7 @@ protected:
     cocos2d::Vec2 tap;
     LineContainer *linecontainer;
     void SetGameOver();
+    //I changed Something
 public:
     MissionLayer();
     ~MissionLayer();

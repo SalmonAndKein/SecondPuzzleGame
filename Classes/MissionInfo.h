@@ -32,7 +32,7 @@ protected:
     CC_SYNTHESIZE_READONLY(int, _numOfBall, NumberOfBall)
     std::vector<GameSpriteData*> GameSpriteInitDataArray;
 public:
-    MissionInfo();
+    MissionInfo(int num, float air, float gravity);
     ~MissionInfo();
     int InsertGameSpriteInitData(GameSpriteData*);
     GameSpriteData * GetGameSpriteInitData(int idx);

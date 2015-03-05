@@ -7,11 +7,16 @@
 //
 
 #include "MissionLayer.h"
+enum
+{
+    Candy
+};
 
 USING_NS_CC;
 
 MissionLayer::MissionLayer() {
     bMissionLoaded = false;
+    bGameOver = false;
 }
 MissionLayer::~MissionLayer() {
 }
@@ -23,10 +28,9 @@ void MissionLayer::UnloadMission() {
     removeAllChildren();
     bMissionLoaded = false;
 }
-bool MissionLayer::LoadMission(MissionInfo * loadMissionInfo) {
-    if(bMissionLoaded || loadMissionInfo->GetGameSpriteArraySize() <= 0)
-        return false;
-    
+
+void MissionLayer::BuildInstance()
+{
     screenSize = Director::getInstance()->getWinSize();
     
     //라인 그리기용 클래스 생성
@@ -39,33 +43,85 @@ bool MissionLayer::LoadMission(MissionInfo * loadMissionInfo) {
     movingObjectArray.push_back(ball);
     this->addChild(ball);
     this->retain();
+
+}
+
+void MissionLayer::Reset()
+{
+    screenSize = Director::getInstance()->getWinSize();
+
     //볼 초기화
     ballStartPoint = cocos2d::Vec2(screenSize.width * 0.5,screenSize.height * 0.1);
     ball->setIsMoving(false);
     ball->setPosition(ballStartPoint);
     ball->setMoveVector(cocos2d::Vec2(0,0));
+    if (bGameOver)
+    {
+        //캔디 제거
+        int count = (int)movingObjectArray.size();
+        
+        for (int i=0; i<count; i++)
+        {
+            if (movingObjectArray[i]->getWhatName()=='c')
+            {
+                this->removeChild(movingObjectArray[i]);
+            }
+        }
+
+        movingObjectArray.clear();
+        movingObjectArray.push_back(ball);
+        candyArray.clear();
+    }
     
-    for(int i=0; i<loadMissionInfo->GetGameSpriteArraySize(); i++) {
+    //게임 정보 초기화
+    
+    bGameOver = false;
+    bMissionRunning = false;
+    bMissionLoaded = false;
+    
+}
+
+void MissionLayer::Generate()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    info = new MissionInfo(5,0.99, -0.98);
+    auto gameSpriteData = new MissionInfo::GameSpriteData();
+    for(int i=0; i<3; i++) {
+        gameSpriteData->setType(i);
+        gameSpriteData->setPositionX(100.f + 100.f * i);
+        gameSpriteData->setPositionY(visibleSize.height * 0.2f);
+        info->InsertGameSpriteInitData(gameSpriteData);
+    }
+    delete gameSpriteData;
+    
+}
+
+bool MissionLayer::LoadMission() {
+    if(bMissionLoaded || info->GetGameSpriteArraySize() <= 0)
+        return false;
+    
+    screenSize = Director::getInstance()->getWinSize();
+    
+    for(int i=0; i<info->GetGameSpriteArraySize(); i++) {
         //캔디 생성
-        auto candyInitData = loadMissionInfo->GetGameSpriteInitData(i);
+        auto candyInitData = info->GetGameSpriteInitData(i);
         auto newCandy = Candy::createWithTypeNumber(candyInitData->getType());
         movingObjectArray.push_back(newCandy);
         candyArray.push_back(newCandy);
-        this->addChild(newCandy);
-        newCandy->retain();
+        this->addChild(newCandy,0,Candy);
         //캔디 초기화
         newCandy->setPosition(cocos2d::Vec2(candyInitData->getPositionX(), candyInitData->getPositionY()));
         newCandy->setIsMoving(false);
         newCandy->setMoveVector(cocos2d::Vec2(0,0));
+        
+        cocos2d::log("%d",(int)movingObjectArray.size());
     }
     
-    //게임 정보 초기화
-    gravityFactor = loadMissionInfo->getGravityFactor();
-    airResistanceFactor = loadMissionInfo->getAirResistanceFacotor();
-    curNumOfBall = loadMissionInfo->getNumberOfBall();
-    bGameOver = false;
+    gravityFactor = info->getGravityFactor();
+    airResistanceFactor = info->getAirResistanceFacotor();
+    curNumOfBall = info->getNumberOfBall();
     bMissionLoaded = true;
-    bMissionRunning = false;
     
     return true;
 }
@@ -91,7 +147,10 @@ void MissionLayer::SetGameOver() {
     StopMission();
     cocos2d::log("GameOver");
 }
-void MissionLayer::update(float dt) {
+void MissionLayer::update(float dt)
+{
+    screenSize = cocos2d::Director::getInstance()->getWinSize();
+    
     //벽 충돌 판단
     cocos2d::Vec2 vec = ball->getMoveVector();
     if (ball->getPosition().y>=screenSize.height || ball->getPosition().y<=0)
@@ -102,9 +161,8 @@ void MissionLayer::update(float dt) {
     {
         vec.x = -vec.x;
     }
-    //볼에 airResistance 작용
-    ball->setMoveVector(vec * airResistanceFactor);
-
+    ball->setMoveVector(vec);
+    
     for(int i=0; i<movingObjectArray.size(); i++)
     {
         //움직임이 적용되는 대상에게만 공식 대입
@@ -121,9 +179,9 @@ void MissionLayer::update(float dt) {
             //수정된 값에 따라 벡터값 재적용 후 이동
             movingObjectArray[i]->setMoveVector(curMoveVec);
             movingObjectArray[i]->Move();
-            
             if(movingObjectArray[i]->getPosition().y <= 0) {
                 movingObjectArray[i]->setIsMoving(false);
+                //볼이 떨어지면 하트 감소, 게임오버
                 if (movingObjectArray[i] == ball)
                 {
                     curNumOfBall--;
@@ -134,16 +192,27 @@ void MissionLayer::update(float dt) {
                 }
             }
         }
-    }
-    //캔디가 맞았을 경우 이동 활성화
-    for(int i=0; i<candyArray.size(); i++) {
-        if(ball->CheckCollision(candyArray[i])) {
-            candyArray[i]->setIsMoving(true);
+        //캔디가 맞았을 경우 이동 활성화
+        for(int i=0; i<candyArray.size(); i++) {
+            if(ball->CheckCollision(candyArray[i])) {
+                candyArray[i]->setIsMoving(true);
+            }
         }
+        
+        
     }
 }
+
 bool MissionLayer::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
+    if (bGameOver)
+    {
+        this->Reset();
+        this->LoadMission();
+        this->StartMission();
+        return false;
+    }
+    
     //터치가 볼에 닿았을 경우 라인 콘테이너의 시작점과 끝점을 선정, 그 후 라인 타입(라인을 그려도 된다고 지시)을 바꾼다.
     if (pTouches)
     {

@@ -51,18 +51,10 @@ bool HelloWorld::init()
     
     MissionLayer * mission = new MissionLayer();
     
-    //MissionInfo 생성 및 초기화
-    MissionInfo * missionInitData = new MissionInfo();
-    auto gameSpriteData = new MissionInfo::GameSpriteData();
-    for(int i=0; i<3; i++) {
-        gameSpriteData->setType(i);
-        gameSpriteData->setPositionX(100.f + 100.f * i);
-        gameSpriteData->setPositionY(visibleSize.height * 0.8f);
-        missionInitData->InsertGameSpriteInitData(gameSpriteData);
-    }
-    delete gameSpriteData;
-    
-    mission->LoadMission(missionInitData);
+    mission->BuildInstance();
+    mission->Reset();
+    mission->Generate();
+    mission->LoadMission();
     mission->StartMission();
     //mission->PauseMission(true);
     

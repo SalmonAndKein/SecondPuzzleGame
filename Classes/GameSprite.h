@@ -15,6 +15,7 @@ class GameSprite : public cocos2d::Sprite {
 protected:
     CC_SYNTHESIZE(cocos2d::Vec2, _moveVec, MoveVector);
     CC_SYNTHESIZE(bool, _bMoving, IsMoving);
+    CC_SYNTHESIZE(int, _whatname, WhatName);
 public:
     GameSprite(){}
     ~GameSprite(){}

@@ -38,11 +38,16 @@ protected:
     cocos2d::Vec2 tap;
     LineContainer *linecontainer;
     void SetGameOver();
+    
+    MissionInfo *info;
+    
+    
 public:
     MissionLayer();
     ~MissionLayer();
     //static MissionLayer * createMissionLayer();
-    bool LoadMission(MissionInfo*);
+    
+    bool LoadMission();
     void UnloadMission();
     void StartMission();
     void StopMission();
@@ -53,6 +58,10 @@ public:
     virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
     virtual void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
     virtual void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
+    
+    void BuildInstance();
+    void Reset();
+    void Generate();
 };
 
 #endif /* defined(__SecondPuzzleGame__MissionLayer__) */

@@ -8,9 +8,10 @@
 
 #include "Candy.h"
 Candy::Candy() {
-    
+    setWhatName('c');
 }
 Candy::Candy(int _type) {
+    setWhatName('c');
     type = _type;
 }
 Candy::~Candy() {
@@ -23,9 +24,10 @@ void Candy::SetBright()
 }
 Candy * Candy::createWithTypeNumber(int type) {
     auto * candy = new Candy(type);
+    
     if(candy && candy->initWithFile("Ball-3.png"))
     {
-        candy->autorelease();
+        candy->retain();
         return candy;
     }
     CC_SAFE_DELETE(candy);

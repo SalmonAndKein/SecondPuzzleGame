@@ -8,11 +8,11 @@
 
 #include "MissionInfo.h"
 
-MissionInfo::MissionInfo()
+MissionInfo::MissionInfo(int num, float air, float gravity)
 {
-    _numOfBall = 5;
-    _airResistance = 0.99;
-    _gravity = -0.98;
+    _numOfBall = num;
+    _airResistance = air;
+    _gravity = gravity;
 }
 MissionInfo::~MissionInfo()
 {

@@ -16,11 +16,14 @@ class PlayerBall : public GameSprite
 protected:
 public:
     PlayerBall()
-    {}
+    {
+        setWhatName('b');
+    }
     ~PlayerBall()
     {}
     static PlayerBall * createWithType(int type) {
         PlayerBall * ball = new PlayerBall();
+        
         if(ball && ball->initWithFile("Ball-3.png"))
         {
             ball->autorelease();

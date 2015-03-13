@@ -73,6 +73,8 @@
 		768544C81AA0508000E70186 /* PlayerBall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 768544C01AA0508000E70186 /* PlayerBall.cpp */; };
 		768544CA1AA050FA00E70186 /* LineContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 768544C91AA050FA00E70186 /* LineContainer.cpp */; };
 		768544CB1AA050FA00E70186 /* LineContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 768544C91AA050FA00E70186 /* LineContainer.cpp */; };
+		76B756111AB0092E008139BB /* MissionUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76B7560F1AB0092E008139BB /* MissionUILayer.cpp */; };
+		76B756121AB0092E008139BB /* MissionUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76B7560F1AB0092E008139BB /* MissionUILayer.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -175,6 +177,8 @@
 		768544BF1AA0508000E70186 /* MissionInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MissionInfo.cpp; sourceTree = "<group>"; };
 		768544C01AA0508000E70186 /* PlayerBall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerBall.cpp; sourceTree = "<group>"; };
 		768544C91AA050FA00E70186 /* LineContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineContainer.cpp; sourceTree = "<group>"; };
+		76B7560F1AB0092E008139BB /* MissionUILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MissionUILayer.cpp; sourceTree = "<group>"; };
+		76B756101AB0092E008139BB /* MissionUILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissionUILayer.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -317,6 +321,8 @@
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				7671816E1A9D8A4B0061FBC1 /* MissionLayer.h */,
 				768544B81AA04EF400E70186 /* MissionLayer.cpp */,
+				76B7560F1AB0092E008139BB /* MissionUILayer.cpp */,
+				76B756101AB0092E008139BB /* MissionUILayer.h */,
 				767181801A9D9DB30061FBC1 /* New Group */,
 			);
 			name = Classes;
@@ -539,6 +545,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				768544C11AA0508000E70186 /* Candy.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				76B756111AB0092E008139BB /* MissionUILayer.cpp in Sources */,
 				768544B91AA04EF400E70186 /* MissionLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -557,6 +564,7 @@
 				768544CB1AA050FA00E70186 /* LineContainer.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				768544C41AA0508000E70186 /* GameSprite.cpp in Sources */,
+				76B756121AB0092E008139BB /* MissionUILayer.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				768544C21AA0508000E70186 /* Candy.cpp in Sources */,

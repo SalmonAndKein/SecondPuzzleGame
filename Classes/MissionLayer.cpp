@@ -142,6 +142,7 @@ void MissionLayer::update(float dt) {
         }
     }
 }
+
 bool MissionLayer::onTouchBegan(cocos2d::Touch *pTouches,cocos2d::Event *event)
 {
     //터치가 볼에 닿았을 경우 라인 콘테이너의 시작점과 끝점을 선정, 그 후 라인 타입(라인을 그려도 된다고 지시)을 바꾼다.

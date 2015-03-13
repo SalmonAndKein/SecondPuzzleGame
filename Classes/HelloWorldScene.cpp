@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
-#include "MissionLayer.h"
+//#include "MissionLayer.h"
+#include "MissionUILayer.h"
 
 USING_NS_CC;
 
@@ -49,7 +50,7 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
-    MissionLayer * mission = new MissionLayer();
+    MissionUILayer * mission = new MissionUILayer();
     
     //MissionInfo 생성 및 초기화
     MissionInfo * missionInitData = new MissionInfo();
